@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2017
+** EPITECH PROJECT, 2018
 ** malloc
 ** File description:
 ** malloc.h
@@ -11,7 +11,9 @@
 #include <stdio.h>
 #include <string.h>
 
+//#define align(size) (((size -1) / 16 + 1) * 16)
 #define align(x) (((((x) - 1) >> 3) << 3) + 8)
+
 extern const int DATA_BLOCK_SIZE;
 
 typedef struct data_info_s {
@@ -35,14 +37,10 @@ void *realloc(void *ptr, size_t size);
 
 /* calloc.c */
 
-void *calloc(size_t nmemb, size_t size);
+//void *calloc(size_t nmemb, size_t size);
 
 /* free.c */
 
 void free(void *ptr);
-
-/* print_alloc_memory.c */
-
-void print_alloc_memory();
 
 #endif /* MALLOC_H_ */
