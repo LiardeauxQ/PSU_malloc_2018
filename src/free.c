@@ -50,5 +50,6 @@ void free(void *ptr)
 	if (!(data = find_data_info_addr(ptr)))
 		return;
 	data->empty = 1;
-//	merge_data_block(&data);
+    //	merge_data_block(&data);
 }
+

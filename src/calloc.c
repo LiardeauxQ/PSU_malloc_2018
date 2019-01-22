@@ -7,6 +7,7 @@
 
 #include "malloc.h"
 /*
+
 void *calloc(size_t nmemb, size_t size)
 {
 	void *p = malloc(nmemb * size);
@@ -16,3 +17,4 @@ void *calloc(size_t nmemb, size_t size)
 		tmp[i] = 0;
 	return (p);
 }*/
+
