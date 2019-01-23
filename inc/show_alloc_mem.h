@@ -8,6 +8,6 @@
 #ifndef SHOW_ALLOC_MEM_H_
 #	define SHOW_ALLOC_MEM_H_
 
-void show_alloc_mem();
+void show_alloc_mem(void);
 
 #endif

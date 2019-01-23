@@ -10,12 +10,13 @@
 
 void show_alloc_mem()
 {
-	data_info_t *heap = stock_start_heap();
+	data_info_t *head = get_head(NULL, 0);
 
-    printf("break: %p\n", heap);
-    while (heap) {
-        printf("%p - %p : %ld bytes\n", heap + DATA_BLOCK_SIZE, heap->next, heap->size_blk);
-        heap = heap->next;
+    printf("break: %p struct size %d\n", head, DATA_BLOCK_SIZE);
+    while (head) {
+        printf("%p - %p : %ld bytes isFree %d\n", head +
+                DATA_BLOCK_SIZE, head->next, head->size_blk, head->empty);
+        head = head->next;
     }
 }
 

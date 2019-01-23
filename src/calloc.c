@@ -6,7 +6,6 @@
 */
 
 #include "malloc.h"
-/*
 
 void *calloc(size_t nmemb, size_t size)
 {
@@ -16,5 +15,4 @@ void *calloc(size_t nmemb, size_t size)
 	for (size_t i = 0 ; i < align(nmemb * size) ; i++)
 		tmp[i] = 0;
 	return (p);
-}*/
-
+}

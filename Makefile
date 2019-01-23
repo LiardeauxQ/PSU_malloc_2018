@@ -12,6 +12,7 @@ SRC	=	malloc.c \
 		realloc.c	\
 		free.c	\
 		print_alloc_memory.c	\
+		check_ptr.c
 #		main.c
 
 SRCS	=	$(addprefix $(PATHSRC), $(SRC))
@@ -24,9 +25,9 @@ NAME		=	malloc
 
 LIB_NAME	=	libmy_malloc.so
 
-RED		=	\033[0;31m
+RED			=	\033[0;31m
 GREEN		=	\033[0;32m
-NC		=	\033[0m
+NC			=	\033[0m
 GREY		=	\033[90m
 BG_COLOR	=	\033[46m
 
@@ -44,7 +45,7 @@ $(LIB_NAME): $(OBJ)
 
 %.o:	%.c
 	@printf '${GREEN} [ OK ]${NC} Building : $<\n'
-	@gcc -o $@ -c -fPIC $< $(LDFLAGS) $(CFLAGS)
+	@gcc -o $@ -fPIC -c $< $(LDFLAGS) $(CFLAGS)
 
 clean:
 	@rm -f $(OBJ)
@@ -53,8 +54,8 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 	@rm -f $(LIB_NAME)
-	@printf '${RED}Fclean${NC}: ./$(NAME) removed\n'
-	find . -name *.dSYM -type d -exec rm -rf "{}" \;
+	@find . -name *.dSYM -type d -exec rm -rf "{}" \;
+	@printf '${RED}Fclean${NC}: ./$(NAME) $(LIB_NAME) removed\n'
 
 re: fclean all
 
