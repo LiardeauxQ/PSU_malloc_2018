@@ -28,7 +28,7 @@ typedef struct data_info_s {
 /* malloc.c */
 
 void *malloc(size_t size);
-void *get_head(void *ptr, char mode);
+void *stock_start_heap(void);
 
 /* realloc.c */
 

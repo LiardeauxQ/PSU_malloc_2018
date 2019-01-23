@@ -10,7 +10,7 @@
 
 void show_alloc_mem()
 {
-	data_info_t *head = get_head(NULL, 0);
+	data_info_t *head = stock_start_heap();
 
     printf("break: %p struct size %d\n", head, DATA_BLOCK_SIZE);
     while (head) {
