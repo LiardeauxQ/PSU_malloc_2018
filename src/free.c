@@ -6,6 +6,7 @@
 */
 
 #include "malloc.h"
+#include "show_alloc_mem.h"
 
 static data_info_t *find_data_info_addr(void *ptr)
 {
@@ -41,6 +42,7 @@ void free(void *ptr)
 {
 	data_info_t *data = NULL;
 
+    my_putstr("will be freed\n");
 	if (ptr == NULL)
 		return;
 	if (!(data = find_data_info_addr(ptr)))

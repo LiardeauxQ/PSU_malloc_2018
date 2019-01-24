@@ -6,9 +6,9 @@
 */
 
 #include "malloc.h"
+#include "show_alloc_mem.h"
 
 const int DATA_BLOCK_SIZE = align(sizeof(data_info_t));
-
 
 static void *check_free_block(data_info_t **data, size_t size)
 {
@@ -88,5 +88,6 @@ void *malloc(size_t size)
             return (NULL);
     }
     get_head(data, 1);
+    show_block_info(p - DATA_BLOCK_SIZE);
     return (p);
 }

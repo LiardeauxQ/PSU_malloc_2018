@@ -6,13 +6,10 @@
 */
 
 #include "malloc.h"
+#include "show_alloc_mem.h"
 
 void *calloc(size_t nmemb, size_t size)
 {
-	void *p = malloc(nmemb * size);
-	unsigned char *tmp = p;
-
-	for (size_t i = 0 ; i < align(nmemb * size) ; i++)
-		tmp[i] = 0;
-	return (p);
+    my_putstr("will be calloc");
+	return (memset(malloc(nmemb * size), 0, align(nmemb * size)));
 }
