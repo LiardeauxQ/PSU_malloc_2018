@@ -9,50 +9,8 @@
 
 const int DATA_BLOCK_SIZE = align(sizeof(data_info_t));
 
-int create_elem(data_info_t **elem, size_t size)
-{
-	(*elem) = sbrk(DATA_BLOCK_SIZE);
-	if ((*elem) == (void*)-1)
-		return (1);
-	(*elem)->empty = 0;
-	(*elem)->size_blk = size;
-	(*elem)->next = NULL;
-	(*elem)->prev = NULL;
-	return (0);
-}
 
-int append(data_info_t **data, size_t size)
-{
-	data_info_t *tmp = *data;
-
-	if (*data == NULL) {
-		if (create_elem(data, size))
-			return (1);
-		return (0);
-	}
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	if (create_elem(&tmp->next, size))
-		return (1);
-	tmp->next->prev = tmp;
-	return (0);
-}
-
-int insert(data_info_t **data, size_t size)
-{
-	data_info_t *new = NULL;
-
-	if (create_elem(&new, size))
-		return (1);
-	new->next = (*data)->next;
-	(*data)->next = new;
-	(*data)->prev = (*data);
-	if ((*data)->next != NULL)
-		(*data)->next->prev = new;
-	return (0);
-}
-
-void *check_free_block(data_info_t **data, size_t size)
+static void *check_free_block(data_info_t **data, size_t size)
 {
 	data_info_t *tmp = *data;
 	data_info_t *new = NULL;
@@ -65,7 +23,7 @@ void *check_free_block(data_info_t **data, size_t size)
 	if (tmp == NULL)
 		return (NULL);
 	if (align(tmp->size_blk - size) >= ((size_t)DATA_BLOCK_SIZE + 8)) {
-		new = (void *)tmp + align(DATA_BLOCK_SIZE + size);
+		new = (void *)tmp + DATA_BLOCK_SIZE + size;
 		new->empty = 1;
 		new->size_blk = align(tmp->size_blk - DATA_BLOCK_SIZE - size);
 		new->next = tmp->next;
@@ -79,32 +37,56 @@ void *check_free_block(data_info_t **data, size_t size)
 	return ((void *)tmp + DATA_BLOCK_SIZE);
 }
 
-void *stock_start_heap(void)
+static int create_elem(data_info_t **elem, size_t size)
 {
-	static void *start_heap = NULL;
+	(*elem) = sbrk(DATA_BLOCK_SIZE);
+	if ((*elem) == (void*)-1)
+		return (1);
+	(*elem)->empty = 0;
+	(*elem)->size_blk = size;
+	(*elem)->next = NULL;
+	(*elem)->prev = NULL;
+	return (0);
+}
 
-	if (!start_heap)
-		start_heap = sbrk(0);
-	if (start_heap == (void*)-1)
-		return (NULL);
-	return (start_heap);
+static int append(data_info_t **data, size_t size)
+{
+    data_info_t *tmp = *data;
+
+	if (tmp == NULL)
+		return (create_elem(data, size));
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	if (create_elem(&tmp->next, size))
+		return (1);
+	tmp->next->prev = tmp;
+	return (0);
+}
+
+void *get_head(void *ptr, char mode)
+{
+    static data_info_t *head = NULL;
+
+    if (mode == 1 && head == NULL) {
+        head = ptr;
+        return (head);
+    }
+    return (head);
 }
 
 void *malloc(size_t size)
 {
-	static data_info_t *data = NULL;
-	void *p = NULL;
+    data_info_t *data = (data_info_t*)get_head(NULL, 0);
+    void *p = NULL;
 
-	if (size == 0)
-		return (NULL);
-	stock_start_heap();
-	size = align(size);
-	p = check_free_block(&data, size);
-	if (p == NULL) {
-		if (append(&data, size))
-			return (NULL);
-		if ((p = sbrk(size)) == (void*)-1)
-			return (NULL);
-	}
-	return (p);
+    size = align(size);
+    p = check_free_block(&data, size);
+    if (p == NULL) {
+        if (append(&data, size))
+            return (NULL);
+        if ((p = sbrk(size)) == (void*)-1)
+            return (NULL);
+    }
+    get_head(data, 1);
+    return (p);
 }

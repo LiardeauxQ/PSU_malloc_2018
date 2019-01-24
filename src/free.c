@@ -7,18 +7,14 @@
 
 #include "malloc.h"
 
-void *find_data_info_addr(void *ptr)
+static data_info_t *find_data_info_addr(void *ptr)
 {
-	void *start_heap = stock_start_heap();
-
-	if (start_heap) {
-		if (ptr > start_heap && ptr < sbrk(0))
+	if (!check_ptr(ptr))
 			return (ptr - DATA_BLOCK_SIZE);
-	}
 	return (NULL);
 }
 
-void merge_data_block(data_info_t **data)
+/*static void merge_data_block(data_info_t **data)
 {
 	data_info_t *start = *data;
 	data_info_t *end = *data;
@@ -27,19 +23,19 @@ void merge_data_block(data_info_t **data)
 		start = start->prev;
 	while (end != NULL && end->empty == 1)
 		end = end->next;
-    if (start == end)
+    if ((size_t)start == (size_t)end)
         return;
 	if (end != NULL)
 		start->size_blk = ((size_t)(end) - ((size_t)(start)
                     + DATA_BLOCK_SIZE));
 	else
-		start->size_blk = ((size_t)(sbrk(0)) - ((size_t)(start)
+		start->size_blk = ((size_t)sbrk(0) - ((size_t)(start)
                     + DATA_BLOCK_SIZE));
 	start->empty = 1;
 	start->next = end;
 	if (end != NULL)
 		end->prev = start;
-}
+}*/
 
 void free(void *ptr)
 {
@@ -50,6 +46,5 @@ void free(void *ptr)
 	if (!(data = find_data_info_addr(ptr)))
 		return;
 	data->empty = 1;
-    //	merge_data_block(&data);
+    //merge_data_block(&data);
 }
-
