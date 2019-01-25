@@ -48,5 +48,6 @@ void show_alloc_mem()
         show_block_info(head); 
         head = head->next;
     }
+    my_putstr("end\n");
 }
 

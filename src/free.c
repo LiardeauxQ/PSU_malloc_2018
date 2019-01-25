@@ -10,43 +10,47 @@
 
 static data_info_t *find_data_info_addr(void *ptr)
 {
-	if (!check_ptr(ptr))
-			return (ptr - DATA_BLOCK_SIZE);
-	return (NULL);
+    if (!check_ptr(ptr))
+        return (ptr - DATA_BLOCK_SIZE);
+    return (NULL);
 }
 
-/*static void merge_data_block(data_info_t **data)
+static void merge_data_block(data_info_t **data)
 {
-	data_info_t *start = *data;
-	data_info_t *end = *data;
+    data_info_t *start = *data;
+    data_info_t *end = *data;
 
-	while (start->prev != NULL && start->prev->empty == 1)
-		start = start->prev;
-	while (end != NULL && end->empty == 1)
-		end = end->next;
+    while (start->prev != NULL && start->prev->empty == 1)
+        start = start->prev;
+    while (end != NULL && end->empty == 1)
+        end = end->next;
     if ((size_t)start == (size_t)end)
         return;
-	if (end != NULL)
-		start->size_blk = ((size_t)(end) - ((size_t)(start)
+    if (end != NULL)
+        start->size_blk = ((size_t)(end) - ((size_t)(start)
                     + DATA_BLOCK_SIZE));
-	else
-		start->size_blk = ((size_t)sbrk(0) - ((size_t)(start)
+    else
+        start->size_blk = ((size_t)sbrk(0) - ((size_t)(start)
                     + DATA_BLOCK_SIZE));
-	start->empty = 1;
-	start->next = end;
-	if (end != NULL)
-		end->prev = start;
-}*/
+    start->empty = 1;
+    start->next = end;
+    if (end != NULL)
+        end->prev = start;
+}
 
 void free(void *ptr)
 {
-	data_info_t *data = NULL;
+    data_info_t *data = NULL;
 
-    my_putstr("will be freed\n");
-	if (ptr == NULL)
-		return;
-	if (!(data = find_data_info_addr(ptr)))
-		return;
-	data->empty = 1;
-    //merge_data_block(&data);
+    if (ptr == NULL) {
+        my_putstr("error ptr == null\n");
+        return;
+    }
+    if (!(data = find_data_info_addr(ptr))) {
+        my_putstr("error invalid ptr\n");
+        return;
+    }
+    data->empty = 1;
+    my_putstr("end free\n");
+//    merge_data_block(&data);
 }

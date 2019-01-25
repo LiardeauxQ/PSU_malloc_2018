@@ -20,6 +20,7 @@ void *realloc(void *ptr, size_t size)
     my_putstr("will be realloc\n");
     if (size == 0 || (new_ptr = malloc(size)) == NULL) {
         free(ptr);
+        my_putstr("error\n");
         return (NULL);
     }
     if (ptr == NULL)

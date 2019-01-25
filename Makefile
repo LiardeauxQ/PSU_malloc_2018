@@ -12,6 +12,7 @@ SRC	=	malloc.c \
 		realloc.c	\
 		free.c	\
 		print_alloc_memory.c	\
+		check_free_block.c	\
 		check_ptr.c
 #		main.c
 
