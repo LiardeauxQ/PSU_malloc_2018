@@ -27,8 +27,8 @@ void merge_data_block(data_info_t **data)
 		start = start->prev;
 	while (end != NULL && end->empty == 1)
 		end = end->next;
-    if (start == end)
-        return;
+	if (start == end)
+		return;
 	if (end != NULL)
 		start->size_blk = ((size_t)(end) - ((size_t)(start)
                     + DATA_BLOCK_SIZE));
