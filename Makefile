@@ -13,6 +13,7 @@ SRC	=	malloc.c \
 		free.c	\
 		print_alloc_memory.c	\
 		check_free_block.c	\
+		thread_safety.c	\
 		check_ptr.c
 
 SRCS	=	$(addprefix $(PATHSRC), $(SRC))

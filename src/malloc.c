@@ -61,6 +61,7 @@ void *malloc(size_t size)
     data_info_t *data = (data_info_t*)get_head(NULL, 0);
     void *p = NULL;
 
+    trylock_thread();
     size = compute_pagesize(size);
     p = check_free_block(&data, size);
     if (p == NULL) {
@@ -70,5 +71,6 @@ void *malloc(size_t size)
             return (NULL);
     }
     get_head(data, 1);
+    unlock_thread();
     return (p);
 }
