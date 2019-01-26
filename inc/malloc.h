@@ -14,9 +14,7 @@
 
 #define align(x) (((((x) - 1) >> 3) << 3) + 8)
 
-//#define align(size) (((size -1) / 16 + 1) * 16)
-
-extern const int DATA_BLOCK_SIZE;
+extern const size_t DATA_BLOCK_SIZE;
 
 typedef struct data_info_s {
     char empty;
@@ -28,7 +26,11 @@ typedef struct data_info_s {
 /* malloc.c */
 
 void *malloc(size_t size);
-void *stock_start_heap(void);
+void *get_head(void *ptr, char mode);
+
+/* check_free_block.c */
+
+void *check_free_block(data_info_t **data, size_t size);
 
 /* realloc.c */
 
