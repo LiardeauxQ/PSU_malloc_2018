@@ -30,7 +30,6 @@ typedef struct data_info_s {
 void *malloc(size_t size);
 void *get_head(void *ptr, char mode);
 size_t compute_pagesize(size_t size);
-
 void *trylock_thread();
 void *unlock_thread();
 
