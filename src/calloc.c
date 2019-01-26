@@ -10,5 +10,7 @@
 
 void *calloc(size_t nmemb, size_t size)
 {
-	return (memset(malloc(nmemb * size), 0, align(nmemb * size)));
+    size_t new_size = compute_pagesize(size * nmemb);
+
+	return (memset(malloc(new_size), 0, new_size));
 }

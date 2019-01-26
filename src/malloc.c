@@ -47,12 +47,21 @@ void *get_head(void *ptr, char mode)
     return (head);
 }
 
+size_t compute_pagesize(size_t size)
+{
+    size_t new_size = align(size);
+    size_t page_size = sysconf(_SC_PAGESIZE);
+
+    new_size += page_size - (new_size % page_size);
+    return (new_size);
+}
+
 void *malloc(size_t size)
 {
     data_info_t *data = (data_info_t*)get_head(NULL, 0);
     void *p = NULL;
 
-    size = align(size);
+    size = compute_pagesize(size);
     p = check_free_block(&data, size);
     if (p == NULL) {
         if (append(&data, size))
