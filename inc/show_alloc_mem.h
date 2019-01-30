@@ -6,7 +6,7 @@
 */
 
 #ifndef SHOW_ALLOC_MEM_H_
-#	define SHOW_ALLOC_MEM_H_
+    #define SHOW_ALLOC_MEM_H_
 
 #include <string.h>
 #include <unistd.h>

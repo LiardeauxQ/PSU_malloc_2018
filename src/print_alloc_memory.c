@@ -37,7 +37,7 @@ void show_block_info(data_info_t *data)
 
 void show_alloc_mem()
 {
-	data_info_t *head = get_head(NULL, 0);
+    data_info_t *head = get_head(NULL, 0);
 
     my_putstr("break: ");
     my_putnbr((size_t)head);

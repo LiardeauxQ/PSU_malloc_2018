@@ -6,7 +6,7 @@
 */
 
 #ifndef MALLOC_H_
-#	define MALLOC_H_
+    #define MALLOC_H_
 
 #include <unistd.h>
 #include <stdlib.h>
