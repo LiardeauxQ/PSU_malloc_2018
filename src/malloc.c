@@ -67,10 +67,14 @@ void *malloc(size_t size)
     size = compute_pagesize(size);
     p = check_free_block(&data, size);
     if (p == NULL) {
-        if (append(&data, size))
+        if (append(&data, size)) {
+            unlock_thread();
             return (NULL);
-        if ((p = sbrk(size)) == (void*)-1)
+        }
+        if ((p = sbrk(size)) == (void*)-1) {
+            unlock_thread();
             return (NULL);
+        }
     }
     get_head(data, 1);
     unlock_thread();
