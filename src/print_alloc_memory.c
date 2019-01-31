@@ -1,5 +1,5 @@
 /*
-** EPITECH PROJECT, 2017
+** EPITECH PROJECT, 2018
 ** malloc
 ** File description:
 ** malloc.c
@@ -50,4 +50,3 @@ void show_alloc_mem()
     }
     my_putstr("end\n");
 }
-

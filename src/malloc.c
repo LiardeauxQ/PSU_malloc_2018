@@ -52,8 +52,10 @@ size_t compute_pagesize(size_t size)
     size_t new_size = align(size);
     size_t page_size = sysconf(_SC_PAGESIZE);
 
+    if (new_size < page_size)
+        return (new_size);
     new_size += page_size - (new_size % page_size);
-    return (new_size);
+    return (new_size - 1);
 }
 
 void *malloc(size_t size)
