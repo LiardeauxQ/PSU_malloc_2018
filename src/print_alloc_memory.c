@@ -25,7 +25,7 @@ void my_putstr(char *str)
 
 void show_block_info(data_info_t *data)
 {
-    my_putnbr((size_t)data + DATA_BLOCK_SIZE);
+    my_putnbr((size_t)data + get_block_size()); 
     my_putstr(" - ");
     my_putnbr((size_t)data->next);
     my_putstr(" allocate ");
@@ -35,14 +35,14 @@ void show_block_info(data_info_t *data)
     my_putstr("\n");
 }
 
-void show_alloc_mem()
+void show_alloc_mem(void)
 {
     data_info_t *head = get_head(NULL, 0);
 
     my_putstr("break: ");
     my_putnbr((size_t)head);
     my_putstr(" struct size ");
-    my_putnbr(DATA_BLOCK_SIZE);
+    my_putnbr(get_block_size());
     my_putstr("\n");
     while (head) {
         show_block_info(head); 

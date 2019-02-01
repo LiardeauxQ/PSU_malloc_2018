@@ -21,8 +21,8 @@ void *realloc(void *ptr, size_t size)
     }
     if (ptr == NULL)
         return (new_ptr);
-    old_data = ptr - DATA_BLOCK_SIZE;
-    new_data = (void*)new_ptr - DATA_BLOCK_SIZE;
+    old_data = ptr - get_block_size(); 
+    new_data = (void*)new_ptr - get_block_size();
     for (size_t i = 0 ; i < old_data->size_blk
             && i < new_data->size_blk ; i++)
         *(new_ptr + i) = *(tmp_ptr + i);

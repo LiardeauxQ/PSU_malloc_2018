@@ -26,10 +26,10 @@ void *check_free_block(data_info_t **data, size_t size)
 
     if (tmp == NULL)
         return (NULL);
-    if (align(tmp->size_blk - size) >= ((size_t)DATA_BLOCK_SIZE + 8)) {
-        new = (void*)tmp + DATA_BLOCK_SIZE + size;
+    if (align(tmp->size_blk - size) >= (get_block_size() + 8)) {
+        new = (void*)tmp + get_block_size() + size;
         new->empty = 1;
-        new->size_blk = align(tmp->size_blk - DATA_BLOCK_SIZE - size);
+        new->size_blk = align(tmp->size_blk - get_block_size() - size);
         new->next = tmp->next;
         new->prev = tmp;
         if (new->next != NULL)
@@ -38,5 +38,5 @@ void *check_free_block(data_info_t **data, size_t size)
     }
     tmp->empty = 0;
     tmp->size_blk = size;
-    return ((void*)tmp + DATA_BLOCK_SIZE);
+    return ((void*)tmp + get_block_size());
 }

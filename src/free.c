@@ -11,7 +11,7 @@
 static data_info_t *find_data_info_addr(void *ptr)
 {
     if (!check_ptr(ptr))
-        return (ptr - DATA_BLOCK_SIZE);
+        return (ptr - get_block_size());
     return (NULL);
 }
 
@@ -27,11 +27,11 @@ static void merge_data_block(data_info_t **data)
     if ((size_t)start == (size_t)end)
         return;
     if (end != NULL)
-        start->size_blk = ((size_t)(end) - ((size_t)(start) 
-                    + DATA_BLOCK_SIZE));
+        start->size_blk = ((size_t)(end) - ((size_t)(start)
+                    + get_block_size()));
     else
-        start->size_blk = ((size_t)sbrk(0) - ((size_t)(start) 
-                    + DATA_BLOCK_SIZE));
+        start->size_blk = ((size_t)sbrk(0) - ((size_t)(start)
+                    + get_block_size()));
     start->empty = 1;
     start->next = end;
     if (end != NULL)
@@ -47,5 +47,4 @@ void free(void *ptr)
     if (!(data = find_data_info_addr(ptr)))
         return;
     data->empty = 1;
-//    merge_data_block(data);
 }

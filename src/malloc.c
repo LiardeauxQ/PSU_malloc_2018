@@ -8,11 +8,11 @@
 #include "malloc.h"
 #include "show_alloc_mem.h"
 
-const size_t DATA_BLOCK_SIZE = align(sizeof(data_info_t));
+const size_t DATA_BLOCK_SIZE = sizeof(data_info_t);
 
 static int create_elem(data_info_t **elem, size_t size)
 {
-    (*elem) = sbrk(DATA_BLOCK_SIZE);
+    (*elem) = sbrk(get_block_size());
     if ((*elem) == (void*)-1)
         return (1);
     (*elem)->empty = 0;
@@ -45,17 +45,6 @@ void *get_head(void *ptr, char mode)
         return (head);
     }
     return (head);
-}
-
-size_t compute_pagesize(size_t size)
-{
-    size_t new_size = align(size);
-    size_t page_size = sysconf(_SC_PAGESIZE);
-
-    if (new_size < page_size)
-        return (new_size);
-    new_size += page_size - (new_size % page_size);
-    return (new_size);
 }
 
 void *malloc(size_t size)

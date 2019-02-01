@@ -16,8 +16,6 @@
 
 #define align(x) (((((x) - 1) >> 3) << 3) + 8)
 
-extern const size_t DATA_BLOCK_SIZE;
-
 typedef struct data_info_s {
     char empty;
     size_t size_blk;
@@ -30,8 +28,9 @@ typedef struct data_info_s {
 void *malloc(size_t size);
 void *get_head(void *ptr, char mode);
 size_t compute_pagesize(size_t size);
-void *trylock_thread();
-void *unlock_thread();
+size_t get_block_size(void);
+void *trylock_thread(void);
+void *unlock_thread(void);
 
 /* check_free_block.c */
 
