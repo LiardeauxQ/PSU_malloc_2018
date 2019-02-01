@@ -55,7 +55,7 @@ size_t compute_pagesize(size_t size)
     if (new_size < page_size)
         return (new_size);
     new_size += page_size - (new_size % page_size);
-    return (new_size - 1);
+    return (new_size);
 }
 
 void *malloc(size_t size)
