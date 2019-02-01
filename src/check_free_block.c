@@ -7,7 +7,7 @@
 
 #include "malloc.h"
 
-inline static void *find_best_block(data_info_t *data, size_t size)
+static void *find_best_block(data_info_t *data, size_t size)
 {
     data_info_t *tmp = data;
 

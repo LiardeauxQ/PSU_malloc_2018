@@ -25,7 +25,7 @@ void my_putstr(char *str)
 
 void show_block_info(data_info_t *data)
 {
-    my_putnbr((size_t)data + get_block_size()); 
+    my_putnbr((size_t)data + get_block_size());
     my_putstr(" - ");
     my_putnbr((size_t)data->next);
     my_putstr(" allocate ");
@@ -45,7 +45,7 @@ void show_alloc_mem(void)
     my_putnbr(get_block_size());
     my_putstr("\n");
     while (head) {
-        show_block_info(head); 
+        show_block_info(head);
         head = head->next;
     }
     my_putstr("end\n");

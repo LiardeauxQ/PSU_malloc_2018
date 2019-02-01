@@ -15,29 +15,6 @@ static data_info_t *find_data_info_addr(void *ptr)
     return (NULL);
 }
 
-static void merge_data_block(data_info_t **data)
-{
-    data_info_t *start = *data;
-    data_info_t *end = *data;
-
-    while (start->prev != NULL && start->prev->empty == 1)
-        start = start->prev;
-    while (end != NULL && end->empty == 1)
-        end = end->next;
-    if ((size_t)start == (size_t)end)
-        return;
-    if (end != NULL)
-        start->size_blk = ((size_t)(end) - ((size_t)(start)
-                    + get_block_size()));
-    else
-        start->size_blk = ((size_t)sbrk(0) - ((size_t)(start)
-                    + get_block_size()));
-    start->empty = 1;
-    start->next = end;
-    if (end != NULL)
-        end->prev = start;
-}
-
 void free(void *ptr)
 {
     data_info_t *data = NULL;
